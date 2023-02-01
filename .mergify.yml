@@ -1,0 +1,93 @@
+pull_request_rules:
+
+  # ===============================================================================
+  # DEPENDABOT
+  # ===============================================================================
+
+  - name: Automatic Merge for Dependabot Minor Version Pull Requests
+    conditions:
+      - -draft
+      - author~=^dependabot(|-preview)\[bot\]$
+      - check-success='build_and_test'
+      - title~=Bump [^\s]+ from ([\d]+)\..+ to \1\.
+    actions:
+      review:
+        type: APPROVE
+        message: Automatically approving dependabot pull request
+      merge:
+        method: rebase
+  - name: Alert on major version detection
+    conditions:
+      - author~=^dependabot(|-preview)\[bot\]$
+      - check-success='build_and_test'
+      - -title~=Bump [^\s]+ from ([\d]+)\..+ to \1\.
+    actions:
+      comment:
+        message: "⚠️ @alicekaerast: this is a major version bump and requires your attention"
+
+  # ===============================================================================
+  # AUTOMATIC MERGE (APPROVALS)
+  # ===============================================================================
+
+  - name: Automatic Merge ⬇️ on Approval ✔
+    conditions:
+      - "#approved-reviews-by>=1"
+      - check-success='build_and_test'
+      - label!=work-in-progress
+      - -draft
+    actions:
+      merge:
+        method: squash
+        
+  
+  # ===============================================================================
+  # ALERTS
+  # ===============================================================================
+
+  - name: Notify on merge
+    conditions:
+      - merged
+      - label=automerge
+    actions:
+      comment:
+        message: "✅ @{{author}}: **{{title}}** has been merged successfully."
+  - name: Alert on merge conflict
+    conditions:
+      - conflict
+      - label=automerge
+    actions:
+      comment:
+        message: "🆘 @{{author}}: `{{head}}` has conflicts with `{{base}}` that must be resolved."
+  - name: Alert on tests failure for automerge
+    conditions:
+      - label=automerge
+      - status-failure=commit
+    actions:
+      comment:
+        message: "🆘 @{{author}}: unable to merge due to CI failure."
+
+  # ===============================================================================
+  # STALE BRANCHES
+  # ===============================================================================
+
+  - name: Close stale pull request
+    conditions:
+      - base=main
+      - -closed
+      - updated-at<21 days ago
+    actions:
+      close:
+        message: |
+          This pull request looks stale. Feel free to reopen it if you think it's a mistake.
+      label:
+        add: ["stale"]
+
+  # ===============================================================================
+  # BRANCHES
+  # ===============================================================================
+
+  - name: Delete head branch after merge
+    conditions:
+      - merged
+    actions:
+      delete_head_branch:
