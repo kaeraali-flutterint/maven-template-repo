@@ -11,7 +11,3 @@ This repository uses Java 11. You can override this by updating the configuratio
 * pom.xml
 * .github/workflows/maven.yaml (in multiple places)
 * .sdkmanrc
-
-## Known Issues
-
-Deploys will fail if the version number isn't bumped. We still need to figure out how to handle versioning
