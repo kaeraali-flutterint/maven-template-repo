@@ -30,3 +30,64 @@ This repository uses Java 11. You can override this by updating the configuratio
 * .github/workflows/maven.yaml (in multiple places)
 * .sdkmanrc
 * Dockerfile
+
+## Importing packages
+
+To use the packages built and published by this repository, you will need a GitHub Personal Access Token (classic) and to configure your `~/.m2/settings.xml` file
+
+1. Generate a classic token [here](https://github.com/settings/tokens), ensuring you add `read:packages`
+2. Edit your `~/.m2/settings.xml` file, replacing `GITHUB_USERNAME` and `PERSONAL_TOKEN`:
+
+```xml
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <activeProfiles>
+    <activeProfile>github</activeProfile>
+  </activeProfiles>
+
+  <profiles>
+    <profile>
+      <id>github</id>
+      <repositories>
+        <repository>
+          <id>central</id>
+          <url>https://repo1.maven.org/maven2</url>
+        </repository>
+        <repository>
+          <id>github</id>
+          <url>https://maven.pkg.github.com/alicekaerast/maven-template-repo</url>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+
+  <servers>
+    <server>
+      <id>github</id>
+      <username>GITHUB_USERNAME</username>
+      <password>PERSONAL_TOKEN</password>
+    </server>
+  </servers>
+</settings>
+```
+
+You can now use this package in your own `pom.xml`:
+
+```xml
+<project>
+    ...
+    <dependencies>
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>maven-template-repo</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+    </dependencies>
+</project>
+```
