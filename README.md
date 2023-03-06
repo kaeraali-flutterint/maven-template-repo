@@ -24,7 +24,7 @@ You will need to set your package name and repository configuration in `pom.xml`
 
 Version numbers will be bumped on every merge to the main branch. By default, this will increment the snapshot number, but you can also add `#major`, `#minor`, or `#patch` to a commit message if you are changing something more substantial
 
-This repository uses Java 11. You can override this by updating the configuration in:
+This repository uses Java 11 and Maven 3.8.6. You can override this by updating the configuration in:
 
 * pom.xml
 * .github/workflows/maven.yaml (in multiple places)
