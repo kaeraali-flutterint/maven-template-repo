@@ -6,7 +6,7 @@
 
     <groupId>org.example</groupId>
     <artifactId>maven-template-repo</artifactId>
-    <version>1.0.2-SNAPSHOT3</version>
+    <version>1.0.2-SNAPSHOT4</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
