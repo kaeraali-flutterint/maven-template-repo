@@ -47,7 +47,7 @@ jobs:
         run: mvn wrapper:wrapper -Dmaven=3.8.6
       - name: Bump Version
         id: bump
-        uses: Plugily-Projects/maven-version-bump-action@v8
+        uses: Plugily-Projects/maven-version-bump-action@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           auto-version-bump: true
