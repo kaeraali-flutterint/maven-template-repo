@@ -2,6 +2,8 @@
 
 > A modern (2023) GitHub template repository for use with Apache Maven
 
+⚠️ Since I am no longer working with Java applications, this repository is not currently being maintained
+
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/alicekaerast/maven-template-repo/maven.yaml) ![GitHub last commit](https://img.shields.io/github/last-commit/alicekaerast/maven-template-repo)
 
 This repository is configured to:
